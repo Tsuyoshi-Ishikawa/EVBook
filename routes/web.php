@@ -16,15 +16,15 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/home', 'UsersController@home')->name('home'); //showページ
+Route::get('/home', 'UsersController@home')->name('home')->middleware('auth'); //showページ
 
-Route::get('/words/create', 'WordsController@create');
-Route::post('/words', 'WordsController@store');
-Route::get('/words/{word}/edit', 'WordsController@edit');
-Route::put('/words/{word}', 'WordsController@update');
-Route::delete('/words/{id}', 'WordsController@destroy');
+Route::get('/words/create', 'WordsController@create')->middleware('auth');
+Route::post('/words', 'WordsController@store')->middleware('auth');
+Route::get('/words/{word}/edit', 'WordsController@edit')->middleware('auth');
+Route::put('/words/{word}', 'WordsController@update')->middleware('auth');
+Route::delete('/words/{id}', 'WordsController@destroy')->middleware('auth');
 
-Route::get('/words/test', 'WordsController@test');
+Route::get('/words/test', 'WordsController@test')->middleware('auth');
 
-Route::get('/words/index', 'WordsController@index');
-Route::post('/words/{id}/like', 'WordsController@like');
+Route::get('/words/index', 'WordsController@index')->middleware('auth');
+Route::post('/words/{id}/like', 'WordsController@like')->middleware('auth');
