@@ -8,6 +8,7 @@ $(function() {
   });
 
   // users.show
+
   $('.delete_word').on('click', function () {
     var id = $(this).data('id');
     if (confirm('本当に削除しますか?')) {
@@ -26,31 +27,6 @@ $(function() {
       })
     }
   });
-
-  // var vm = new Vue({
-  //   el: '#app',
-  //   data: {
-  //   },
-  //   methods: {
-  //     delete: function () {
-  //       if (confirm('本当に削除しますか?')) {
-  //         $.ajax({
-  //           url: '/words/' + id,
-  //           type: 'POST', 
-  //           data: {
-  //             'word_id': id,
-  //             '_method': 'DELETE'
-  //           }
-  //         })
-  //           .done((data) => {
-  //             $('#word_' + id).fadeOut(800);
-  //           }).fail((data) => {
-  //             alert('通信に失敗しました');
-  //         })
-  //       }
-  //     }
-  //   }
-  // });
 
   //words.test
   $('#answer_btn').on('click', function () {

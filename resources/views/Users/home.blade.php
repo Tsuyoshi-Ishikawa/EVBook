@@ -5,6 +5,7 @@
 @section('content')
   <h1>ユーザーページ</h1>
   <p>{{ $currentUser->name }}</p>
+  <div id="app">
   <table border="1">
   @forelse ($User_words as $word)
       @if ($word->user_id === $currentUser->id)
@@ -12,7 +13,7 @@
         <td>{{$word->English}}</td>
         <td>{{$word->Japanese}}</td>
         <td><a href="{{ action('WordsController@edit', $word)}}">編集</a></td>
-        <td><span class="delete_word" data-id="{{$word->id}}" >X</span></td>
+        <td><span class="delete_word" data-id="{{$word->id}}" id=del_btn>X</span></td>
       </tr>
       @else
       <tr>
@@ -29,7 +30,7 @@
     <p>no English Word</p>
   @endforelse
   </table>
-  
+  </div>
   
 
   <a href="{{ url('/words/create') }}">英単語登録ページ</a>
@@ -38,6 +39,5 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
   </script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
   <script src="{{ asset('/js/main.js') }}"></script>
 @endsection('content')

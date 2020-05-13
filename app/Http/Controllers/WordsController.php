@@ -70,8 +70,11 @@ class WordsController extends Controller
 
     public function index() {
         $currentUser = Auth::user();
-        // $currentUser = $this->currentUser();
-        $words = Word::orderBy('id', 'desc')->get();
+        $likes = Like::where('user_id', $currentUser->id)->get();
+        foreach ($likes as $like) {
+            $likes_id[] = $like->word_id;
+        }
+        $words = Word::whereNotIn('id', $likes_id)->orderBy('id', 'desc')->get();
         return view('Words.index')->with('words', $words);
     }
 
