@@ -1,3 +1,4 @@
+<a href="{{ action('UsersController@home')}}">戻る</a>
 <form action="{{ $url }}" method="post">
 @method($method)
   @csrf

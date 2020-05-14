@@ -8,6 +8,7 @@
 </head>
 <body>
   <h1>登録された英単語一覧</h1>
+  <a href="{{ action('UsersController@home')}}">戻る</a>
   <div id="msg"></div>
   @if ($words)
     <table border="1">

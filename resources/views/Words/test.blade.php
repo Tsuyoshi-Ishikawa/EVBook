@@ -4,6 +4,7 @@
 
 @section('content')
   <h1>テスト実施ページ</h1>
+  <a href="{{ action('UsersController@home')}}">戻る</a>
   <p>{{ $rand_word->English }}の訳はなんですか？</p>
 
   <p id="answer" style="display:none;">答えは{{ $rand_word->Japanese }}です</p>
