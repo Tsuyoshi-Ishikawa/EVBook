@@ -71,6 +71,7 @@ class WordsController extends Controller
     public function index() {
         $currentUser = Auth::user();
         $likes = Like::where('user_id', $currentUser->id)->get();
+        $likes_id = [];
         foreach ($likes as $like) {
             $likes_id[] = $like->word_id;
         }
