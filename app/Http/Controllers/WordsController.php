@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Word;
 use App\Like;
+use App\Helper\Helper;
 
 class WordsController extends Controller
 {
@@ -51,10 +52,11 @@ class WordsController extends Controller
         //     $User_words[] = Word::where('id', $liked_id)->first();
         // }
         Word::addFavoWords($User_words, $likes, 'word_id');
-        
-        $word_count = $User_words->count();
-        $rand = rand(0, $word_count-1);
-        $rand_word = $User_words[$rand];
+
+        // $word_count = $User_words->count();
+        // $rand = rand(0, $word_count-1);
+        // $rand_word = $User_words[$rand];
+        $rand_word = Helper::createRWord($User_words);
         return view('Words.test')->with('rand_word', $rand_word);
     }
 
