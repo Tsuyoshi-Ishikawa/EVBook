@@ -1,22 +1,24 @@
 <a href="{{ action('UsersController@home')}}">戻る</a>
-<form action="{{ $url }}" method="post">
+<form action="{{ $url }}" method="post" class="text-center mx-auto">
 @method($method)
   @csrf
   @error ("English")
   <p>{{ $message }}</p>
   @enderror
   <p>
-    <label>英語：
+    英語
+  </p>
+  <p>
     <input type="text" name="English" id="" value = "{{ $En_input_Value }}">
-    </label>
   </p>
   @error ("Japanese")
   <p>{{ $message }}</p>
   @enderror
   <p>
-    <label>日本語：
+    日本語
+  </p>
+  <p>
     <input type="text" name="Japanese" id="" value = "{{ $Ja_input_Value }}">
-    </label>
   </p>
 
 <input type="submit" value="{{$submit_value}}">
