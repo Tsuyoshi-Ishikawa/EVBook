@@ -17,11 +17,8 @@ class WordsController extends Controller
     public function store(Request $request) {
         $this->validate($request, Word::$rules);
         $currentUser = Auth::user();
-        // $currentUser = $this->currentUser();
         $word = new Word();
-        $word->English = $request->English;
-        $word->Japanese = $request->Japanese;
-        $currentUser->words()->save($word);
+        $word->setProperty($currentUser, $request);
         return redirect()->action('UsersController@home',$currentUser);
     }
 
@@ -32,39 +29,32 @@ class WordsController extends Controller
     public function update(Request $request, Word $word) {
         $this->validate($request, Word::$rules);
         $currentUser = Auth::user();
-        // $currentUser = $this->currentUser();
-        $word->English = $request->English;
-        $word->Japanese = $request->Japanese;
-        $word->save();
+        $word->setProperty($currentUser, $request);
         return redirect()->action('UsersController@home',$currentUser);
     } 
 
     public function destroy(Request $request) {
         $this->validate($request, Word::$id_rules);
         $currentUser = Auth::user();
-        // $currentUser = $this->currentUser();
-        $word = Word::findOrFail($request->id);
-        $word->delete();
+        // $word = Word::findOrFail($request->id);
+        // $word->delete();
+        Word::deleteProperty($request->id);
     }
 
     public function test() {
         $currentUser = Auth::user();
-        // $currentUser = $this->currentUser();
         $likes = Like::where('user_id', $currentUser->id)->get();
-        $User_words = array();
+        // $User_words = array();
         $User_words = $currentUser->words;
-        foreach ($likes as $like) {
-            $liked_id = $like->word_id;
-            $User_words[] = Word::where('id', $liked_id)->first();
-        }
+        // foreach ($likes as $like) {
+        //     $liked_id = $like->word_id;
+        //     $User_words[] = Word::where('id', $liked_id)->first();
+        // }
+        Word::addFavoWords($User_words, $likes, 'word_id');
+        
         $word_count = $User_words->count();
         $rand = rand(0, $word_count-1);
         $rand_word = $User_words[$rand];
-
-        // $word_count = $currentUser->words->count();
-        // $rand = rand(0, $word_count-1);
-        // $words = $currentUser->words;
-        // $rand_word = $words[$rand];
         return view('Words.test')->with('rand_word', $rand_word);
     }
 
@@ -82,8 +72,6 @@ class WordsController extends Controller
     public function like(Request $request) {
         $this->validate($request, Like::$rules);
         $currentUser = Auth::user();
-        // $currentUser = $this->currentUser();
-
         if ($request->type === 'remove') {
             $like = Like::Search($currentUser->id, $request->id);
             $like->delete();

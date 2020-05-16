@@ -27,12 +27,14 @@ class UsersController extends Controller
     public function home() {
         $currentUser = Auth::user();
         $likes = Like::where('user_id', $currentUser->id)->get();
-        $User_words = array();
+        // $User_words = array();
         $User_words = $currentUser->words;
-        foreach ($likes as $like) {
-            $liked_id = $like->word_id;
-            $User_words[] = Word::where('id', $liked_id)->first();
-        }
+        // foreach ($likes as $like) {
+        //     $liked_id = $like->word_id;
+        //     $User_words[] = Word::where('id', $liked_id)->first();
+        // }
+
+        Word::addFavoWords($User_words, $likes, 'word_id');
         return view('Users.home', compact('currentUser','User_words'));
     }
 }
