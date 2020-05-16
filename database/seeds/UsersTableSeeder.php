@@ -9,6 +9,14 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         $param = [
+            'name' => 'ishikawa',
+            'email' => 'test@test.com',
+            'password' => Hash::make('ishikawapass') 
+        ];
+        $user = new User;
+        $user->fill($param)->save();
+
+        $param = [
             'name' => 'yamamoto',
             'email' => 'test2@test.com',
             'password' => Hash::make('yamamotopass') 
