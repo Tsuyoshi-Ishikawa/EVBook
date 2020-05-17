@@ -23,34 +23,39 @@
     }
 
     public static function favoSwitch(User $currentUser,$request, string $type, string $id) {
-      // if ($request->$type === 'remove') {
-      //     $like = Like::Search($currentUser->$id, $request->$id);
-      //     $like->delete();
-      // } elseif ($request->$type === 'add') {
-      //     $like = new Like();
-      //     $like->user_id = $currentUser->$id;
-      //     $like->word_id = $request->$id;
-      //     $like->save();
-      // } else {
-      //     throw new \Exception('お気に入り登録or解除に失敗しました');
-      // }
-
-      try {
-        if ($request->$type === 'remove') {
+      if ($request->$type === 'remove') {
           $like = Like::Search($currentUser->$id, $request->$id);
           $like->delete();
-        } elseif ($request->$type === 'add') {
-            $like = new Like();
-            $like->user_id = $currentUser->$id;
-            $like->word_id = $request->$id;
-            $like->save();
-        } else {
-            throw new Exception('お気に入り登録or解除に失敗しました');
-        }
-      } catch (Exception $e){
-        echo "例外キャッチ：",$e->getMessage();
-        exit;
+      } elseif ($request->$type === 'add') {
+          $like = new Like();
+          $like->user_id = $currentUser->$id;
+          $like->word_id = $request->$id;
+          $like->save();
+      } else {
+          header("Content-Type: application/json; charset=UTF-8");
+          $data = [
+          'failedMsg' => 'お気に入り登録or解除に失敗しました'
+          ];
+          echo json_encode($data);
+          exit;
       }
+
+      // try {
+      //   if ($request->$type === 'remove') {
+      //     $like = Like::Search($currentUser->$id, $request->$id);
+      //     $like->delete();
+      //   } elseif ($request->$type === 'add') {
+      //       $like = new Like();
+      //       $like->user_id = $currentUser->$id;
+      //       $like->word_id = $request->$id;
+      //       $like->save();
+      //   } else {
+      //       throw new Exception('お気に入り登録or解除に失敗しました');
+      //   }
+      // } catch (Exception $e){
+      //   echo "例外キャッチ：",$e->getMessage();
+      //   exit;
+      // }
     }
 
   }

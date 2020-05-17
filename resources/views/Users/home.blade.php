@@ -6,6 +6,7 @@
   @section('h3', 'ユーザーページ')
 
   <div>
+    <div id="msg"></div>
     <table border="1" class="table-stripped table-bordered mx-auto my-5 w-50">
     @forelse ($User_words as $word)
         @if ($word->user_id === $currentUser->id)

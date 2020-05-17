@@ -68,10 +68,15 @@ $(function() {
           }
         })
           .done((data) => {
-            $('#msg').html('<p>お気に入り登録に成功しました</p>');
-            $('#like_' + id).addClass('after_favo');
-            $('#like_' + id).html("お気に入り解除");
-            console.log('add_succeed');
+            console.log(data.failedMsg);
+            if (data.failedMsg) {
+              $('#msg').html(data.failedMsg);
+            } else {
+              $('#msg').html('<p>お気に入り登録に成功しました</p>');
+              $('#like_' + id).addClass('after_favo');
+              $('#like_' + id).html("お気に入り解除");
+              console.log('add_succeed');
+            }
           }).fail((data) => {
             alert('通信に失敗しました');
           })
