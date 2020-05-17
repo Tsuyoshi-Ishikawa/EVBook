@@ -40,4 +40,12 @@ class Word extends Model
             $User_words[] = self::findOrFail($liked_id);
         }
     }
+
+    public static function getNotFavoWords($likes, string $word_id) {
+        $likes_id = [];
+        foreach ($likes as $like) {
+            $likes_id[] = $like->$word_id;
+        }
+        return self::whereNotIn('id', $likes_id)->orderBy('id', 'desc')->get();
+    }
 }

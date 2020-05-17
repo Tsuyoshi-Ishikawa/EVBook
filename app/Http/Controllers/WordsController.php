@@ -63,27 +63,30 @@ class WordsController extends Controller
     public function index() {
         $currentUser = Auth::user();
         $likes = Like::where('user_id', $currentUser->id)->get();
-        $likes_id = [];
-        foreach ($likes as $like) {
-            $likes_id[] = $like->word_id;
-        }
-        $words = Word::whereNotIn('id', $likes_id)->orderBy('id', 'desc')->get();
+        // $likes_id = [];
+        // foreach ($likes as $like) {
+        //     $likes_id[] = $like->word_id;
+        // }
+        // $words = Word::whereNotIn('id', $likes_id)->orderBy('id', 'desc')->get();
+
+        $words = Word:: getNotFavoWords($likes, 'word_id');
         return view('Words.index')->with('words', $words);
     }
 
     public function like(Request $request) {
         $this->validate($request, Like::$rules);
         $currentUser = Auth::user();
-        if ($request->type === 'remove') {
-            $like = Like::Search($currentUser->id, $request->id);
-            $like->delete();
-        } elseif ($request->type === 'add') {
-            $like = new Like();
-            $like->user_id = $currentUser->id;
-            $like->word_id = $request->id;
-            $like->save();
-        } else {
-            throw new \Exception('お気に入り登録or解除に失敗しました');
-        }
+        // if ($request->type === 'remove') {
+        //     $like = Like::Search($currentUser->id, $request->id);
+        //     $like->delete();
+        // } elseif ($request->type === 'add') {
+        //     $like = new Like();
+        //     $like->user_id = $currentUser->id;
+        //     $like->word_id = $request->id;
+        //     $like->save();
+        // } else {
+        //     throw new \Exception('お気に入り登録or解除に失敗しました');
+        // }
+        Helper::favoSwitch($currentUser, $request, 'type', 'id');
     }
 }
