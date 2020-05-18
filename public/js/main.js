@@ -48,10 +48,14 @@ $(function() {
           }
         })
           .done((data) => {
-            $('#msg').html('<p>お気に入り解除に成功しました</p>');
-            $('#like_' + id).removeClass('after_favo');
-            $('#like_' + id).html("お気に入り登録");
-            console.log('remove_succeed');
+            if (data.failedMsg) {
+              $('#msg').html(data.failedMsg);
+            } else {
+              $('#msg').html('<p>お気に入り解除に成功しました</p>');
+              $('#like_' + id).removeClass('after_favo');
+              $('#like_' + id).html("お気に入り登録");
+              console.log('remove_succeed');
+            }
           }).fail((data) => {
             alert('通信に失敗しました');
           })
@@ -68,7 +72,6 @@ $(function() {
           }
         })
           .done((data) => {
-            console.log(data.failedMsg);
             if (data.failedMsg) {
               $('#msg').html(data.failedMsg);
             } else {
