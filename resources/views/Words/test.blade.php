@@ -4,7 +4,7 @@
 
 @section('content')
   @section('h3', '英単語テスト')
-  <a href="{{ action('UsersController@home')}}">戻る</a>
+  <a href="{{route('Users.home') }}">戻る</a>
   <div class="text-center mx-auto">
     <p>{{ $rand_word->English }}の訳はなんですか？</p>
 

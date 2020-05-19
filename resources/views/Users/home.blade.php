@@ -13,7 +13,7 @@
         <tr id="word_{{$word->id}}">
           <td>{{$word->English}}</td>
           <td>{{$word->Japanese}}</td>
-          <td><a href="{{ action('WordsController@edit', $word)}}">編集</a></td>
+          <td><a href="{{route('Words.edit', ['word' => $word]) }}">編集</a></td>
           <td><span class="delete_word" data-id="{{$word->id}}" id=del_btn>X</span></td>
         </tr>
         @else

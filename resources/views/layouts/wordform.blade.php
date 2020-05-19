@@ -1,4 +1,4 @@
-<a href="{{ action('UsersController@home')}}">戻る</a>
+<a href="{{route('Users.home') }}">戻る</a>
 <form action="{{ $url }}" method="post" class="text-center mx-auto">
 @method($method)
   @csrf
