@@ -6,9 +6,9 @@
   @section('h3', 'ユーザーページ')
 
   <div>
-    <div id="msg"></div>
-    <table border="1" class="table-stripped table-bordered mx-auto my-5 w-50">
-    @forelse ($User_words as $word)
+    <div id="msg" class="text-center"></div>
+    <table border="1" class="table-stripped table-bordered mx-auto my-5 w-50 text-center">
+    @forelse ($words as $word)
         @if ($word->user_id === $currentUser->id)
         <tr id="word_{{$word->id}}">
           <td>{{$word->English}}</td>
@@ -28,7 +28,7 @@
         </tr>
         @endif
     @empty
-      <p>no English Word</p>
+      <p class="text-center">no English Word</p>
     @endforelse
     </table>
     
@@ -41,7 +41,4 @@
       </div>
   </div>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-  </script>
-  <script src="{{ asset('/js/main.js') }}"></script>
 @endsection('content')

@@ -9,12 +9,8 @@ class Word extends Model
 {
     protected $guarded = array('id');
 
-    public function user() {
-        return $this->belongsTo('App\User');
-    }
-
     public static $rules = [
-        'English' => 'required|string|alpha',
+        'English' => ['required', 'string', 'regex:/^([a-zA-Z])*$/'],
         'Japanese' => 'required|string',
     ];
 
@@ -22,30 +18,31 @@ class Word extends Model
         'word_id' => 'required|integer',
     ];
 
-    public function setProperty(User $user, $request) {
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
+
+    public function favo_users() {
+        return $this->belongsToMany('App\User');
+    }
+
+    public function setValues(User $user, $request) {
         $this->English = $request->English;
         $this->Japanese = $request->Japanese;
         $user->words()->save($this);
     }
 
-    public static function deleteProperty(int $id) {
+    public function updateValues($word_ids, $request) {
+        $existJud = array_search($this->id, $word_ids);
+        if (isset($existJud)) {
+            $this->English = $request->English;
+            $this->Japanese = $request->Japanese;
+            $this->save();
+        }
+    }
+
+    public static function deleteValue(int $id) {
         $word = self::findOrFail($id);
         $word->delete();
-    }
-
-    public static function addFavoWords($User_words, $likes, string $word_id) {
-        foreach ($likes as $like) {
-            $liked_id = $like->$word_id;
-            // $User_words[] = self::where('id', $liked_id)->first();
-            $User_words[] = self::findOrFail($liked_id);
-        }
-    }
-
-    public static function getNotFavoWords($likes, string $word_id) {
-        $likes_id = [];
-        foreach ($likes as $like) {
-            $likes_id[] = $like->$word_id;
-        }
-        return self::whereNotIn('id', $likes_id)->orderBy('id', 'desc')->get();
     }
 }

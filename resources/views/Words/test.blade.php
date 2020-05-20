@@ -12,7 +12,4 @@
     <button id="answer_btn">答えをみる</button>
     <a href="{{ url('/words/test') }}">次の問題へ</a>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-  </script>
-  <script src="{{ asset('/js/main.js') }}"></script>
 @endsection('content')

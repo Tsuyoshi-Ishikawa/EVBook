@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Word;
-use App\Like;
 
 class UsersController extends Controller
 {
@@ -26,9 +25,10 @@ class UsersController extends Controller
      */
     public function home() {
         $currentUser = Auth::user();
-        $likes = Like::where('user_id', $currentUser->id)->get();
-        $User_words = $currentUser->words;
-        Word::addFavoWords($User_words, $likes, 'word_id');
-        return view('Users.home', compact('currentUser','User_words'));
+        $words = $currentUser->getAllWords();
+        return view('Users.home')->with([
+            'currentUser' => $currentUser,
+            'words' => $words,
+        ]);
     }
 }
