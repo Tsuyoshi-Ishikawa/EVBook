@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
+use Illuminate\Validation\Rule;
 
 class Word extends Model
 {
@@ -14,9 +15,28 @@ class Word extends Model
         'Japanese' => 'required|string',
     ];
 
-    public static $id_rules = [
-        'word_id' => 'required|integer',
-    ];
+    public static function deleteRules(array $word_ids) {
+        $v_rule = [
+            'word_id' => [
+                'required',
+                'integer',
+                Rule::in($word_ids),
+            ],
+        ];
+        return $v_rule;
+    } 
+
+    public static function favoRules(array $word_ids) {
+        $v_rule = [
+            'word_id' => [
+                'required',
+                'integer',
+                Rule::notIn($word_ids),
+            ],
+            'type' => ['required', 'string', 'regex:/^([a-zA-Z])*$/'],
+        ];
+        return $v_rule;
+    }
 
     public function user() {
         return $this->belongsTo('App\User');

@@ -23,9 +23,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/words', 'WordsController@store')->name('Words.store');
 
-    Route::get('/words/{word}/edit', 'WordsController@edit')->name('Words.edit');
+    Route::get('/words/{id}/edit', 'WordsController@edit')->name('Words.edit');
 
-    Route::put('/words/{word}', 'WordsController@update')->name('Words.update');
+    Route::put('/words/{id}', 'WordsController@update')->name('Words.update');
 
     Route::delete('/words/{id}', 'WordsController@destroy')->name('Words.destroy');
 

@@ -21,11 +21,13 @@ class WordsController extends Controller
         return redirect('/home');
     }
 
-    public function edit(Word $word) {
+    public function edit(int $id) {
+        $word = Word::where('id', '=', $id)->first();
         return view('Words.edit')->with('word', $word);
     }
 
-    public function update(Request $request, Word $word) {
+    public function update(Request $request,int $id) {
+        $word = Word::where('id', '=', $id)->first();
         $this->validate($request, Word::$rules);
         $currentUser = Auth::user();
         $word_ids = $currentUser->WordIds();
@@ -34,8 +36,10 @@ class WordsController extends Controller
     } 
 
     public function destroy(Request $request) {
-        $this->validate($request, Word::$id_rules);
         $currentUser = Auth::user();
+        $word_ids = $currentUser->WordIds();
+        $v_rules = Word::deleteRules($word_ids);
+        $this->validate($request, $v_rules);
         Word::deleteValue($request->id);
     }
 
@@ -55,12 +59,10 @@ class WordsController extends Controller
     }
 
     public function like(Request $request) {
-        $v_rule = [
-            'word_id' => 'required|integer',
-            'type' => ['required', 'string', 'regex:/^([a-zA-Z])*$/'],
-        ];
-        $this->validate($request, $v_rule);
         $currentUser = Auth::user();
+        $word_ids = $currentUser->WordIds();
+        $v_rules = Word::favoRules($word_ids);
+        $this->validate($request, $v_rules);
 
         $favo_type = $request->type;
         $word_id = $request->word_id;
