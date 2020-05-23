@@ -86,4 +86,25 @@ $(function() {
         }
     }
   });
+
+  //users.search
+  $('#search').on('click', function () {
+    var search_word = $('#search_word').val();
+    $.ajax({
+      url: '/users/search',
+      type: 'POST',
+      data: {
+        'search_word': search_word
+      }
+    })
+    .done((data) => {
+      if (data.users) {
+        $('#msg').html('<p>該当するユーザーがいます！！！</p>');
+      } else {
+        $('#msg').html('<p>該当するユーザーがおりません</p>');
+      }
+    }).fail((data) => {
+      alert('通信に失敗しました');
+    })
+  });
 });

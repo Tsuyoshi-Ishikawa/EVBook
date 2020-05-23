@@ -31,4 +31,22 @@ class UsersController extends Controller
             'words' => $words,
         ]);
     }
+
+    public function search() {
+        return view('Users.search');
+    }
+
+    public function searchUser(Request $request) {
+        var_dump($request);
+        exit;
+        $users = Word::where('name', 'LIKE', "%{$request->search_word}%")->get();
+        if ($users) {
+            header("Content-Type: application/json; charset=UTF-8");
+            $data = [
+                'users' => $users
+            ];
+            echo json_encode($data);
+            exit;
+        }
+    }
 }

@@ -38,6 +38,7 @@
         <a class="btn-sm btn-primary" href="{{ url('/words/create') }}">英単語登録ページ</a>
         <a class="btn-sm btn-primary" href="{{ url('/words/test') }}">英単語テストページ</a>
         <a class="btn-sm btn-primary" href="{{ url('/words/index') }}">英単語投稿一覧</a>
+        <a class="btn-sm btn-primary" href="{{ url('/users/search') }}">ユーザー検索</a>
       </div>
   </div>
   </div>
