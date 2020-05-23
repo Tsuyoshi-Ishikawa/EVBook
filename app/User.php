@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Word;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -102,5 +103,17 @@ class User extends Authenticatable
             $U_Words_ids[] = $user_word->id;
         }
         return $U_Words_ids;
+    }
+
+    public static function searchUser($keyWord) {
+        $users = DB::table('users')->where('name', 'like', '%' . htmlspecialchars($keyWord, ENT_QUOTES, "UTF-8") . '%')->get();
+            if (count($users) !== 0) {
+                header("Content-Type: application/json; charset=UTF-8");
+                $data = [
+                    'users' => $users
+                ];
+                echo json_encode($data);
+                exit;
+            }
     }
 }

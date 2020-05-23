@@ -90,6 +90,8 @@ $(function() {
   //users.search
   $('#search').on('click', function () {
     var search_word = $('#search_word').val();
+    console.log(search_word);
+    //ここまでは大丈夫
     $.ajax({
       url: '/users/search',
       type: 'POST',
@@ -99,6 +101,7 @@ $(function() {
     })
     .done((data) => {
       if (data.users) {
+        console.log(data.users);
         $('#msg').html('<p>該当するユーザーがいます！！！</p>');
       } else {
         $('#msg').html('<p>該当するユーザーがおりません</p>');

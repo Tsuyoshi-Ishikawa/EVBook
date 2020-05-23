@@ -63,7 +63,7 @@ class WordsController extends Controller
         $word_ids = $currentUser->WordIds();
         $v_rules = Word::favoRules($word_ids);
         $this->validate($request, $v_rules);
-
+        
         $favo_type = $request->type;
         $word_id = $request->word_id;
         $currentUser->switchFavo($favo_type, $word_id);
