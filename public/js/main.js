@@ -91,7 +91,6 @@ $(function() {
   $('#search').on('click', function () {
     var search_word = $('#search_word').val();
     console.log(search_word);
-    //ここまでは大丈夫
     $.ajax({
       url: '/users/search',
       type: 'POST',
@@ -103,11 +102,22 @@ $(function() {
       if (data.users) {
         console.log(data.users);
         $('#msg').html('<p>該当するユーザーがいます！！！</p>');
+        setSearchResult(data.users);
       } else {
-        $('#msg').html('<p>該当するユーザーがおりません</p>');
+        alert('該当するユーザーがおりません');
       }
     }).fail((data) => {
       alert('通信に失敗しました');
     })
   });
+
+  function setSearchResult(users) {
+    $.each(users, function (index, value) {
+      // var detail_link = "{{route('Words.edit', ['id' => " + value.id + "])}}"
+      $("#search_result").append(
+        // "<tr><th>" + value.name + "</th><th><a href=" + detail_link + ">" + "詳細" + "</a></th></tr>"
+        "<tr><th>" + value.name + "</th><th>" + "詳細" + "</th></tr>"
+      );
+    })
+  }
 });
