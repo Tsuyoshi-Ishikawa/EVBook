@@ -14,7 +14,7 @@ $(function() {
     if (confirm('本当に削除しますか?')) {
       $.ajax({
         url: '/words/' + id,
-        type: 'POST', 
+        type: 'POST',
         data: {
           'word_id': id,
           '_method': 'DELETE'
@@ -90,6 +90,8 @@ $(function() {
   //users.search
   $('#search').on('click', function () {
     var search_word = $('#search_word').val();
+    $("#search_result").html('');
+    $('#msg').html('');
     console.log(search_word);
     $.ajax({
       url: '/users/search',
@@ -112,12 +114,11 @@ $(function() {
   });
 
   function setSearchResult(users) {
-    $.each(users, function (index, value) {
-      // var detail_link = "{{route('Words.edit', ['id' => " + value.id + "])}}"
-      $("#search_result").append(
-        // "<tr><th>" + value.name + "</th><th><a href=" + detail_link + ">" + "詳細" + "</a></th></tr>"
-        "<tr><th>" + value.name + "</th><th>" + "詳細" + "</th></tr>"
-      );
+      $.each(users, function (index, value) {
+          var detail_link = "/users/" + value.id;
+          $("#search_result").append(
+              "<tr><th>" + value.name + "</th><th><a href=" + detail_link + " >" + "詳細" + "</a></th></tr>"
+          );
     })
   }
 });

@@ -23,6 +23,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/users/search', 'UsersController@searchUser')->name('Users.searchUser');
 
+    Route::get('/users/{id}', 'UsersController@show')->name('Users.show');
+
     Route::get('/words/create', 'WordsController@create')->name('Words.create');
 
     Route::post('/words', 'WordsController@store')->name('Words.store');

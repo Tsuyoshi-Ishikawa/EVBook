@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Word;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -42,7 +43,7 @@ class User extends Authenticatable
     public function words() {
         return $this->hasMany('App\Word');
     }
-    
+
     public function favo_words() {
         return $this->belongsToMany('App\Word');
     }
@@ -115,5 +116,14 @@ class User extends Authenticatable
                 echo json_encode($data);
                 exit;
             }
+    }
+
+    public static function selectUser(int $id) {
+        $user = self::findOrFail($id);
+        if (Auth::user()->id === $user->id) {
+            return false;
+        } else {
+            return $user;
+        }
     }
 }

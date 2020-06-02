@@ -42,4 +42,16 @@ class UsersController extends Controller
             User::searchUser($keyWord);
         }
     }
+
+    public function show(int $id) {
+        $user = User::selectUser($id);
+        if ($user) {
+            $words = $user->getAllWords();
+            return view('Users.show')->with([
+                'user' => $user,
+                'words' => $words,
+            ]);
+        }
+        return view('Users.search');
+    }
 }
